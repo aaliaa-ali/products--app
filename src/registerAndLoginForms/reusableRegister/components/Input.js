@@ -12,10 +12,10 @@ function Input(props) {
           <div>
             <TextField
             sx={{m:1,width:'100%'}}
-              error={!!form.errors[name]}
+              error={!!form.errors[name]&&form.touched[name]}
               id="filled-error-helper-text"
               label={label}
-              helperText={form.errors[name]}
+              helperText={form.touched[name]?form.errors[name]:null}
               variant="standard"
               {...field}
             />
