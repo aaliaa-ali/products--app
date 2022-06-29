@@ -13,7 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
-import classes from './Navbar.module.scss';
+import classes from "./Navbar.module.scss";
+import Card from "./Card";
 
 const pages = [{ link: "products", title: "Products" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -42,13 +43,15 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor:'#ff5722'}}>
+    <AppBar position="static" sx={{ backgroundColor: "#ff5722" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: "none", sm: "flex" }, mr: 1 }}>
-          <img className={classes.logo} src="https://pnggrid.com/wp-content/uploads/2021/05/Amazon-Logo-Transparent-2048x620.png"/>
+            <img
+              className={classes.logo}
+              src="https://pnggrid.com/wp-content/uploads/2021/05/Amazon-Logo-Transparent-2048x620.png"
+            />
           </Box>
-          
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", sm: "none" } }}>
             <IconButton
@@ -88,8 +91,11 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ display: { xs: "flex", sm: "none" }, mr: 1 ,flexGrow: 1}}>
-          <img className={classes.logo} src="https://pnggrid.com/wp-content/uploads/2021/05/Amazon-Logo-Transparent-2048x620.png"/>
+          <Box sx={{ display: { xs: "flex", sm: "none" }, mr: 1, flexGrow: 1 }}>
+            <img
+              className={classes.logo}
+              src="https://pnggrid.com/wp-content/uploads/2021/05/Amazon-Logo-Transparent-2048x620.png"
+            />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "flex" } }}>
             {pages.map((page) => (
@@ -104,7 +110,7 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-
+         
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -135,6 +141,9 @@ const ResponsiveAppBar = () => {
                 </MenuItem>
               ))}
             </Menu>
+          </Box>
+          <Box sx={{ mx:1 }}>
+            <Card />
           </Box>
         </Toolbar>
       </Container>

@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter, Router } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "./components/Navbar";
 import RegisterForm from "./registerAndLoginForms/reusableRegister/RegisterForm";
 import Products from "./productsView/Products";
 import { QueryClient, QueryClientProvider } from "react-query";

@@ -3,8 +3,11 @@ import CallApi from "../reusableFunctions/callApi";
 import ProductCard from "./ProductCard";
 import Grid from "@mui/material/Grid";
 import { Box, Container } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function Products() {
+  const card = useSelector((state) => state.card);
+  console.log("card", card);
   const { data, isError, error, isLoading } = CallApi(
     "getAllProduct",
     {
@@ -27,12 +30,12 @@ function Products() {
     );
   } else {
     return (
-      <Container sx={{ width: "100%" ,mt:3}}>
+      <Container sx={{ width: "100%", mt: 3 }}>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {data?.data?.map((product) => {
             return (
-              <Grid item xs={6} sm={4} md={3}  >
-                <ProductCard product={product} />
+              <Grid item xs={6} sm={4} md={3} key={product.id} >
+                <ProductCard product={product}  />
               </Grid>
             );
           })}

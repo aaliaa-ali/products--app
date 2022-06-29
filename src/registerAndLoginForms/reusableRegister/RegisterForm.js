@@ -2,18 +2,21 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormController from "./FormController";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 function RegisterForm() {
   let onSubmit = (values) => console.log("hello", values);
 
+  const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
   const initialValues = {
     name: "",
     email: "",
     gender: "",
     password: "",
     passwordConfirmation: "",
+    img: "",
   };
+
   const validationSchema = Yup.object({
     name: Yup.string().required("name is required!"),
     email: Yup.string()
@@ -22,7 +25,6 @@ function RegisterForm() {
     gender: Yup.string().required("gender is required!"),
     password: Yup.string().required("Password is required!"),
     passwordConfirmation: Yup.string()
-      .min(6)
       .when("password", {
         is: (val) => (val && val.length > 0 ? true : false),
         then: Yup.string().oneOf(
@@ -31,10 +33,17 @@ function RegisterForm() {
         ),
       })
       .required("Confirm Password Required"),
+    img: Yup.mixed()
+      .notRequired()
+      .test(
+        "FILE_FORMAT",
+        "Uploaded file has unsupported format.",
+        (value) => !value || (value && SUPPORTED_FORMATS.includes(value.type))
+      ),
   });
 
   return (
-    <Container sx={{ mt: 7 }}>
+    <Container sx={{ mt: 2 }}>
       <Box
         sx={{
           width: "30%",
@@ -44,13 +53,15 @@ function RegisterForm() {
           borderRadius: 5,
         }}
       >
-        <Typography variant="h5" sx={{color:'gray' }} >Register</Typography>
+        <Typography variant="h5" sx={{ color: "gray" }}>
+          Register
+        </Typography>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {(formik) => {
+          {({ errors, values, isValid, handleBlur, setFieldValue }) => {
             return (
               <Form>
                 <FormController control="input" name="name" label="Name" />
@@ -65,12 +76,23 @@ function RegisterForm() {
                   name="passwordConfirmation"
                   label="Confirm password"
                 />
-                <Box sx={{textAlign:'center'}}>
+                <TextField
+            sx={{m:1,width:'100%'}}
+            name="img"
+                  id="filled-error-helper-text"
+                  variant="standard"
+                  type="file"
+                  onBlur={handleBlur}
+                  onChange={(e) => setFieldValue("img", e.target.files[0])}
+                  error={!!errors.instructorImg}
+                  helperText={errors.instructorImg}
+                />
+                <Box sx={{ textAlign: "center" }}>
                   <button className="btn-primary" type="submit">
                     Submit
                   </button>
-                  <br/>
-                  <Link to='/login'>Already have Account</Link>
+                  <br />
+                  <Link to="/login">Already have Account</Link>
                 </Box>
               </Form>
             );
