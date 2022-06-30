@@ -15,15 +15,22 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.scss";
 import Card from "./Card";
-
-const pages = [{ link: "products", title: "Products" }];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const settings2 = [
-  { link: "login", title: "Log IN" },
-  { link: "register", title: "Register" },
-];
+import { useSelector } from "react-redux";
 
 const ResponsiveAppBar = () => {
+  const { img, name ,email} = useSelector((state) => state.auth);
+  const pages = [{ link: "products", title: "Products" }];
+  var settings;
+  email
+    ? (settings = [
+        { link: "profile", title: "Profile" },
+        { link: "logout", title: "Log out" },
+      ])
+    : (settings = [
+        { link: "login", title: "Log IN" },
+        { link: "register", title: "Register" },
+      ]);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -43,7 +50,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#ff5722" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#ff5722", mb: 3 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: "none", sm: "flex" }, mr: 1 }}>
@@ -104,17 +111,25 @@ const ResponsiveAppBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                <Link to={`/${page.link}`}>
+                <Link className={classes.navLinks} to={`/${page.link}`}>
                   <Typography textAlign="center">{page.title}</Typography>
                 </Link>
               </Button>
             ))}
           </Box>
-         
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt="Remy Sharp"
+                  src={
+                    img
+                      ? URL.createObjectURL(img)
+                      : "https://th.bing.com/th/id/OIP.BkoXurD30qD41Q4pDKvDAAHaGH?w=237&h=196&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+                  }
+                />
+               
               </IconButton>
             </Tooltip>
             <Menu
@@ -133,16 +148,16 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings2.map((setting) => (
+              {settings.map((setting) => (
                 <MenuItem key={setting.link} onClick={handleCloseUserMenu}>
-                  <Link to={`/${setting.link}`}>
+                  <Link  className={classes.accountLinks} to={`/${setting.link}`}>
                     <Typography textAlign="center">{setting.title}</Typography>
                   </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <Box sx={{ mx:1 }}>
+          <Box sx={{ mx: 1 }}>
             <Card />
           </Box>
         </Toolbar>

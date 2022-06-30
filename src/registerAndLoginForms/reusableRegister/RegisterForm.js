@@ -3,15 +3,22 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormController from "./FormController";
 import { Box, Container, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/auth/authActions";
 function RegisterForm() {
-  let onSubmit = (values) => console.log("hello", values);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  let onSubmit = (values) => {
+    dispatch(registerUser(values));
+    navigate("/products");
+  };
 
   const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
   const initialValues = {
     name: "",
     email: "",
-    gender: "",
     password: "",
     passwordConfirmation: "",
     img: "",
@@ -22,7 +29,6 @@ function RegisterForm() {
     email: Yup.string()
       .required("Email is required!")
       .email("Please enter valid Email"),
-    gender: Yup.string().required("gender is required!"),
     password: Yup.string().required("Password is required!"),
     passwordConfirmation: Yup.string()
       .when("password", {
@@ -61,7 +67,7 @@ function RegisterForm() {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, values, isValid, handleBlur, setFieldValue }) => {
+          {({ errors, handleBlur, setFieldValue }) => {
             return (
               <Form>
                 <FormController control="input" name="name" label="Name" />
@@ -77,8 +83,8 @@ function RegisterForm() {
                   label="Confirm password"
                 />
                 <TextField
-            sx={{m:1,width:'100%'}}
-            name="img"
+                  sx={{ m: 1, width: "100%" }}
+                  name="img"
                   id="filled-error-helper-text"
                   variant="standard"
                   type="file"

@@ -9,9 +9,10 @@ import { Link } from "react-router-dom";
 import classes from "./ProductCard.module.scss";
 import { useDispatch } from "react-redux/es/exports";
 import { addToCard } from "../redux/card/cardActions";
+import PrimaryButton from "../components/PrimaryButton";
 
 export default function ProductCard(props) {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const { title, category, image, price, rating, id } = props.product;
   return (
     <Card sx={{ maxWidth: 345, height: "100%", position: "relative" }}>
@@ -52,18 +53,25 @@ export default function ProductCard(props) {
         </Typography>
       </CardActions>
       <CardActions>
-        <Button
+        {/* <Button
         onClick={()=>dispatch(addToCard(props.product))}
           sx={{
             backgroundColor: "#ff5722",
             textAlign: "center",
             color: "white",
             padding: "15px",
-            width:'100%'
+            width:'100%',
+            '&:hover': {
+              background: "#e64a19",
+           },
           }}
         >
           Add To Card
-        </Button>
+        </Button> */}
+        <PrimaryButton
+          name="Add To Card"
+          onClick={() => dispatch(addToCard(props.product))}
+        />
       </CardActions>
     </Card>
   );

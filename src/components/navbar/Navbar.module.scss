@@ -1,0 +1,17 @@
+.logo {
+  width: 100px;
+  padding-top: 12px;
+}
+.navLinks {
+  text-decoration: none;
+  color: white;
+}
+
+.cardProduct {
+  text-decoration: none;
+  font-size: 10px;
+  color: gray;
+}
+.accountLinks {
+  @extend .cardProduct;
+}

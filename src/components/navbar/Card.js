@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classes from "./Navbar.module.scss";
 import { useDispatch } from "react-redux/es/exports";
@@ -19,9 +19,12 @@ import {
   addToCard,
   RemoveFromCard,
   decProductcount,
-} from "../redux/card/cardActions";
+} from "../../redux/card/cardActions";
+import PrimaryButton from "../PrimaryButton";
 
 function Card() {
+  // const productsNum=localStorage.getItem('productsNum')||0
+  const navigate =useNavigate()
   const dispatch = useDispatch();
   const products = useSelector((state) => state.card);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -33,7 +36,7 @@ function Card() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+
   const countProducts = (products) => {
     let count = 0;
     products.forEach((element) => {
@@ -41,14 +44,15 @@ function Card() {
     });
     return count;
   };
-  useEffect(()=>{console.log('first', countProducts(products))},[products])
-
+  useEffect(() => {
+    console.log("first", countProducts(products));
+  }, [products]);
 
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, color: "white" }}>
-          <Badge badgeContent={countProducts(products)} color="primary">
+          <Badge badgeContent={countProducts(products)||'0'} color="primary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -70,7 +74,8 @@ function Card() {
         onClose={handleCloseUserMenu}
       >
         {products.length != 0 ? (
-          products.map((product) => (
+          <Box>
+         { products.map((product) => (
             <MenuItem key={product.link} onClick={handleCloseUserMenu}>
               <Grid
                 container
@@ -124,10 +129,12 @@ function Card() {
                 </Grid>
               </Grid>
             </MenuItem>
-          ))
-        ) : (
+          ))}
+          <PrimaryButton name='Review Order' onClick={()=>navigate('/revieworder')}/></Box>
+          ) : (
           <h1>Card Is Empty</h1>
         )}
+       
       </Menu>
     </Box>
   );
