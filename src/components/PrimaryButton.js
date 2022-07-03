@@ -5,7 +5,6 @@ const PrimaryButton = (props) => {
     const {onClick,name}=props
 
  return <Button
-    // onClick={() => dispatch(addToCard(props.product))}
     onClick={onClick}
     sx={{
       backgroundColor: "#ff5722",

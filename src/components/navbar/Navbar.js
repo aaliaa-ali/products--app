@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 
 const ResponsiveAppBar = () => {
   const { img, name ,email} = useSelector((state) => state.auth);
+  
   const pages = [{ link: "products", title: "Products" }];
   var settings;
   email

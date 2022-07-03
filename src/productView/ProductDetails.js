@@ -8,6 +8,8 @@ import CallApi from "../reusableFunctions/callApi";
 import { Box, Container } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
+
 
 function ProductDetails() {
   const { id } = useParams();
@@ -24,7 +26,7 @@ function ProductDetails() {
   );
   console.log("movieData", data?.data);
   if (isLoading) {
-    return <h1>loading......</h1>;
+    return  <LoadingSpinner/> ;
   } else {
     const { title, category, image, price, rating, id, description } =
       data?.data;

@@ -24,7 +24,6 @@ function ReviewOrder() {
     });
     return totalPrice;
   };
-  console.log("total", total(products));
   return (
     <Container>
       <TableContainer component={Paper} sx={{ boxShadow: 0 }}>
@@ -74,8 +73,8 @@ function ReviewOrder() {
                 justifyContent: "space-between",
               }}
             >
-              <Typography> subTotal</Typography>
-              <Typography>$ {Math.floor(total(products))}</Typography>
+              <TableCell> subTotal</TableCell>
+              <TableCell>$ {Math.floor(total(products))}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

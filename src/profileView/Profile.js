@@ -8,19 +8,18 @@ import {
   Container,
   IconButton,
   Input,
-  TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser, updateUser } from "../redux/auth/authActions";
+import {  updateUser } from "../redux/auth/authActions";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import Button from "@mui/material/Button";
+import { toast } from "react-toastify";
 
 function Profile() {
   const user = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  let onSubmit = (values) => dispatch(updateUser(values));
+  let onSubmit = (values) => {dispatch(updateUser(values))
+    toast.success("Updated Succssesfully"); };
 
   const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
   const initialValues = user;
@@ -59,8 +58,7 @@ function Profile() {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, handleBlur, setFieldValue, values }) => {
-            console.log("errors", errors);
+          {({ errors, setFieldValue, values }) => {
             return (
               <Form>
                 <Box sx={{ textAlign: "center" }}>

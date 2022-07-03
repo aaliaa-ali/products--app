@@ -6,6 +6,10 @@ import { Box, Container, TextField, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/auth/authActions";
+import { toast } from "react-toastify";
+
+
+
 function RegisterForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -13,7 +17,7 @@ function RegisterForm() {
   let onSubmit = (values) => {
     dispatch(registerUser(values));
     navigate("/products");
-  };
+    toast.success("Registered Succssesfully");  };
 
   const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
   const initialValues = {

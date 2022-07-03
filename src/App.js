@@ -15,14 +15,18 @@ import Profile from "./profileView/Profile";
 import LogOut from "./components/LogOut";
 import ReviewOrder from "./orderView/ReviewOrder";
 import SubmitOrder from "./orderView/SubmitOrder";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const queryClient = new QueryClient();
+  // const notify = () => toast("Wow so easy!");
 
   return (
     <div>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+          <ToastContainer position="bottom-right" />
           <Navbar />
           <Routes>
             <Route path="/products" element={<Products />} />
@@ -32,7 +36,6 @@ function App() {
             <Route path="/logout" element={<LogOut />} />
             <Route path="/revieworder" element={<ReviewOrder />} />
             <Route path="/order" element={<SubmitOrder />} />
-
 
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="*" element={<Navigate to="/products" replace />} />

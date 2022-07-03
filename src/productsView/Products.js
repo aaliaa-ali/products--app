@@ -8,7 +8,6 @@ import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 
 function Products() {
   const card = useSelector((state) => state.card);
-  console.log("card", card);
   const { data, isError, error, isLoading } = CallApi(
     "getAllProduct",
     {

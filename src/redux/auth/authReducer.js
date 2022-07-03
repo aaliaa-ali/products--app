@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
-
-const initialValues = { img: "", name: "", email: "" };
+const initialState={
+  name:'',
+  email:'',
+  img:''
+}
 
 const authReducer = (
-  // state = JSON.parse(localStorage.getItem("user")) || {},
-  state = {},
+  state = JSON.parse( localStorage.getItem('user'))||initialState,
   action
 ) => {
   const { type, user } = action;
@@ -27,13 +28,11 @@ const authReducer = (
 };
 
 const registerUser = (state) => {
-  // console.log('state', state)
   localStorage.setItem(
     "user",
     JSON.stringify({
       name: state.name,
       email: state.email,
-      img: `${state.img}`,
     })
   );
 };
@@ -43,7 +42,6 @@ const updateUser = (user) => {
     JSON.stringify({
       name: user.name,
       email: user.email,
-      img: user.img,
     })
   );
 };
